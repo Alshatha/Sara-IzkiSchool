@@ -4,20 +4,22 @@
 <meta charset="UTF-8">
 <title>الملف الشامل للصحة المدرسية</title>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 
 body{
 margin:0;
 font-family:Tahoma;
 direction:rtl;
-background:#eef4f8;
+background:#eef3f7;
 }
 
 header{
 background:#0a4fa3;
 color:white;
-padding:20px;
 text-align:center;
+padding:20px;
 }
 
 .container{
@@ -25,7 +27,7 @@ display:flex;
 }
 
 .sidebar{
-width:250px;
+width:230px;
 background:#0a4fa3;
 min-height:100vh;
 padding-top:20px;
@@ -34,7 +36,7 @@ padding-top:20px;
 .sidebar button{
 width:90%;
 margin:8px;
-padding:12px;
+padding:10px;
 border:none;
 background:white;
 color:#0a4fa3;
@@ -45,7 +47,7 @@ font-weight:bold;
 
 .content{
 flex:1;
-padding:30px;
+padding:25px;
 }
 
 .page{
@@ -59,8 +61,8 @@ display:block;
 table{
 width:100%;
 border-collapse:collapse;
-margin-top:15px;
 background:white;
+margin-top:15px;
 }
 
 th,td{
@@ -74,26 +76,31 @@ width:95%;
 padding:6px;
 }
 
-.addbtn{
-margin-top:10px;
+button.add{
 background:#198754;
 color:white;
 border:none;
-padding:10px 15px;
+padding:8px 14px;
+margin-top:10px;
 cursor:pointer;
 border-radius:5px;
 }
 
-.stat{
+.stats{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.card{
 background:white;
 padding:20px;
-margin:10px;
 border-radius:8px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
-display:inline-block;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 </style>
+
 </head>
 
 <body>
@@ -111,170 +118,47 @@ display:inline-block;
 <div class="sidebar">
 
 <button onclick="showPage('home')">الرئيسية</button>
-<button onclick="showPage('cv')">السيرة الذاتية</button>
-<button onclick="showPage('school')">قاعدة بيانات المدرسة</button>
-<button onclick="showPage('plans')">الخطط</button>
-<button onclick="showPage('inventory')">العهدة</button>
-<button onclick="showPage('building')">متابعة المبنى</button>
-<button onclick="showPage('cases')">الحالات الخاصة</button>
+<button onclick="showPage('cases')">الحالات المرضية</button>
 <button onclick="showPage('education')">التثقيف الصحي</button>
-<button onclick="showPage('visits')">سجل المترددين</button>
+<button onclick="showPage('visits')">المترددين</button>
 <button onclick="showPage('reports')">التقارير</button>
 
 </div>
 
 <div class="content">
 
-<!-- الرئيسية -->
+<!-- الصفحة الرئيسية -->
 
 <div id="home" class="page active">
 
 <h2>لوحة التحكم</h2>
 
-<div class="stat">
-عدد الحالات المرضية
-<h3 id="casesCount">0</h3>
+<div class="stats">
+
+<div class="card">
+عدد الحالات
+<h2 id="casesCount">0</h2>
 </div>
 
-<div class="stat">
-عدد الفعاليات الصحية
-<h3 id="eduCount">0</h3>
+<div class="card">
+عدد الفعاليات
+<h2 id="eduCount">0</h2>
 </div>
 
-<div class="stat">
+<div class="card">
 عدد المترددين
-<h3 id="visitCount">0</h3>
+<h2 id="visitCount">0</h2>
 </div>
 
 </div>
 
-<!-- السيرة الذاتية -->
+<br>
 
-<div id="cv" class="page">
-
-<h2>السيرة الذاتية</h2>
-
-<label>الاسم</label>
-<input>
-
-<label>المؤهل العلمي</label>
-<input>
-
-<label>سنوات الخبرة</label>
-<input>
-
-<label>الدورات التدريبية</label>
-<input>
+<canvas id="chart" width="400" height="200"></canvas>
 
 </div>
 
-<!-- قاعدة بيانات المدرسة -->
-
-<div id="school" class="page">
-
-<h2>بيانات المدرسة</h2>
-
-<label>اسم مديرة المدرسة</label>
-<input>
-
-<label>اسم المدير المساعد</label>
-<input>
-
-<label>الأخصائي الاجتماعي</label>
-<input>
-
-<label>عدد الطلبة</label>
-<input>
-
-<label>عدد الشعب</label>
-<input>
-
-<label>عدد الهيئة الإدارية</label>
-<input>
-
-<label>عدد الهيئة التدريسية</label>
-<input>
-
-<label>عدد الحراس</label>
-<input>
-
-<label>عدد السائقين</label>
-<input>
-
-<label>عدد عمال النظافة</label>
-<input>
-
-</div>
-
-<!-- الخطط -->
-
-<div id="plans" class="page">
-
-<h2>الخطة العامة</h2>
-
-<table id="planTable">
-
-<tr>
-<th>الأسبوع</th>
-<th>النشاط</th>
-<th>ملاحظات</th>
-</tr>
-
-</table>
-
-<button class="addbtn" onclick="addRow('planTable',3)">
-إضافة أسبوع
-</button>
-
-</div>
-
-<!-- العهدة -->
-
-<div id="inventory" class="page">
-
-<h2>عهدة الأجهزة</h2>
-
-<table id="devices">
-
-<tr>
-<th>اسم الجهاز</th>
-<th>العدد</th>
-<th>رمز الجهاز</th>
-<th>بلد التصنيع</th>
-<th>الحالة</th>
-</tr>
-
-</table>
-
-<button class="addbtn" onclick="addRow('devices',5)">
-إضافة جهاز
-</button>
-
-</div>
-
-<!-- متابعة المبنى -->
-
-<div id="building" class="page">
-
-<h2>متابعة المبنى المدرسي</h2>
-
-<table id="buildingTable">
-
-<tr>
-<th>البند</th>
-<th>الحالة</th>
-<th>ملاحظات</th>
-</tr>
-
-</table>
-
-<button class="addbtn" onclick="addRow('buildingTable',3)">
-إضافة بند
-</button>
-
-</div>
-
-<!-- الحالات الخاصة -->
+<!-- الحالات -->
 
 <div id="cases" class="page">
 
@@ -285,19 +169,17 @@ display:inline-block;
 <tr>
 <th>اسم الطالب</th>
 <th>الصف</th>
-<th>الحالة المرضية</th>
+<th>الحالة</th>
 <th>خطة المتابعة</th>
 </tr>
 
 </table>
 
-<button class="addbtn" onclick="addCase()">
-إضافة حالة
-</button>
+<button class="add" onclick="addCase()">إضافة حالة</button>
 
 </div>
 
-<!-- التثقيف الصحي -->
+<!-- التثقيف -->
 
 <div id="education" class="page">
 
@@ -311,13 +193,12 @@ display:inline-block;
 <th>الفئة</th>
 <th>العدد</th>
 <th>نوع الفعالية</th>
+<th>صورة</th>
 </tr>
 
 </table>
 
-<button class="addbtn" onclick="addEducation()">
-إضافة فعالية
-</button>
+<button class="add" onclick="addEdu()">إضافة فعالية</button>
 
 </div>
 
@@ -337,9 +218,7 @@ display:inline-block;
 
 </table>
 
-<button class="addbtn" onclick="addVisit()">
-إضافة سجل
-</button>
+<button class="add" onclick="addVisit()">إضافة سجل</button>
 
 </div>
 
@@ -369,7 +248,30 @@ document.getElementById(id).classList.add("active")
 
 }
 
-function addRow(tableId,cols){
+function saveData(){
+
+localStorage.setItem("cases",document.getElementById("casesTable").innerHTML)
+localStorage.setItem("edu",document.getElementById("eduTable").innerHTML)
+localStorage.setItem("visits",document.getElementById("visitTable").innerHTML)
+
+}
+
+function loadData(){
+
+if(localStorage.getItem("cases"))
+document.getElementById("casesTable").innerHTML=localStorage.getItem("cases")
+
+if(localStorage.getItem("edu"))
+document.getElementById("eduTable").innerHTML=localStorage.getItem("edu")
+
+if(localStorage.getItem("visits"))
+document.getElementById("visitTable").innerHTML=localStorage.getItem("visits")
+
+updateStats()
+
+}
+
+function addRow(tableId,cols,type){
 
 let table=document.getElementById(tableId)
 
@@ -378,9 +280,17 @@ let row=table.insertRow()
 for(let i=0;i<cols;i++){
 
 let cell=row.insertCell()
+
+if(type=="file" && i==5)
+cell.innerHTML="<input type='file'>"
+else
 cell.innerHTML="<input>"
 
 }
+
+saveData()
+
+updateStats()
 
 }
 
@@ -388,19 +298,11 @@ function addCase(){
 
 addRow("casesTable",4)
 
-let count=document.getElementById("casesTable").rows.length-1
-
-document.getElementById("casesCount").innerText=count
-
 }
 
-function addEducation(){
+function addEdu(){
 
-addRow("eduTable",5)
-
-let count=document.getElementById("eduTable").rows.length-1
-
-document.getElementById("eduCount").innerText=count
+addRow("eduTable",6,"file")
 
 }
 
@@ -408,11 +310,44 @@ function addVisit(){
 
 addRow("visitTable",3)
 
-let count=document.getElementById("visitTable").rows.length-1
+}
 
-document.getElementById("visitCount").innerText=count
+function updateStats(){
+
+let cases=document.getElementById("casesTable").rows.length-1
+let edu=document.getElementById("eduTable").rows.length-1
+let visits=document.getElementById("visitTable").rows.length-1
+
+document.getElementById("casesCount").innerText=cases
+document.getElementById("eduCount").innerText=edu
+document.getElementById("visitCount").innerText=visits
+
+updateChart(cases,edu,visits)
 
 }
+
+function updateChart(c,e,v){
+
+new Chart(document.getElementById("chart"),{
+
+type:"bar",
+
+data:{
+labels:["الحالات","الفعاليات","المترددين"],
+
+datasets:[{
+
+data:[c,e,v]
+
+}]
+
+}
+
+})
+
+}
+
+loadData()
 
 </script>
 
