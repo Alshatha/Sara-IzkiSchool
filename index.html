@@ -4,54 +4,43 @@
 <meta charset="UTF-8">
 <title>الملف الشامل للصحة المدرسية</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
 
 body{
-margin:0;
 font-family:Tahoma;
 direction:rtl;
+margin:0;
 background:#eef3f7;
 }
 
 header{
 background:#0a4fa3;
 color:white;
-text-align:center;
 padding:20px;
+text-align:center;
 }
 
-.container{
-display:flex;
-}
-
-.sidebar{
-width:230px;
-background:#0a4fa3;
-min-height:100vh;
-padding-top:20px;
-}
-
-.sidebar button{
-width:90%;
-margin:8px;
+nav{
+background:#e9ecef;
 padding:10px;
-border:none;
-background:white;
-color:#0a4fa3;
-cursor:pointer;
-border-radius:6px;
-font-weight:bold;
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+justify-content:center;
 }
 
-.content{
-flex:1;
-padding:25px;
+nav button{
+padding:8px 12px;
+border:none;
+background:#0a4fa3;
+color:white;
+cursor:pointer;
+border-radius:5px;
 }
 
 .page{
 display:none;
+padding:25px;
 }
 
 .active{
@@ -76,27 +65,13 @@ width:95%;
 padding:6px;
 }
 
-button.add{
+.add{
+margin-top:10px;
+padding:8px 12px;
 background:#198754;
 color:white;
 border:none;
-padding:8px 14px;
-margin-top:10px;
 cursor:pointer;
-border-radius:5px;
-}
-
-.stats{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
-
-.card{
-background:white;
-padding:20px;
-border-radius:8px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 </style>
@@ -113,52 +88,184 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 
 </header>
 
-<div class="container">
-
-<div class="sidebar">
+<nav>
 
 <button onclick="showPage('home')">الرئيسية</button>
-<button onclick="showPage('cases')">الحالات المرضية</button>
+<button onclick="showPage('cv')">السيرة الذاتية</button>
+<button onclick="showPage('school')">قاعدة بيانات المدرسة</button>
+<button onclick="showPage('plans')">الخطط</button>
+<button onclick="showPage('inventory')">العهدة</button>
+<button onclick="showPage('building')">متابعة المبنى</button>
+<button onclick="showPage('cases')">الحالات الخاصة</button>
+<button onclick="showPage('screening')">الفحص الشامل</button>
 <button onclick="showPage('education')">التثقيف الصحي</button>
-<button onclick="showPage('visits')">المترددين</button>
+<button onclick="showPage('visits')">سجل المترددين</button>
 <button onclick="showPage('reports')">التقارير</button>
+<button onclick="showPage('circulars')">التعاميم</button>
 
-</div>
-
-<div class="content">
+</nav>
 
 <!-- الصفحة الرئيسية -->
 
 <div id="home" class="page active">
 
-<h2>لوحة التحكم</h2>
+<h2>مرحبا بكم في نظام الصحة المدرسية</h2>
 
-<div class="stats">
-
-<div class="card">
-عدد الحالات
-<h2 id="casesCount">0</h2>
-</div>
-
-<div class="card">
-عدد الفعاليات
-<h2 id="eduCount">0</h2>
-</div>
-
-<div class="card">
-عدد المترددين
-<h2 id="visitCount">0</h2>
-</div>
+<p>
+يحتوي التطبيق على جميع سجلات الصحة المدرسية الخاصة بالممرضة.
+</p>
 
 </div>
 
-<br>
+<!-- السيرة الذاتية -->
 
-<canvas id="chart" width="400" height="200"></canvas>
+<div id="cv" class="page">
+
+<h2>السيرة الذاتية</h2>
+
+<label>الاسم</label>
+<input>
+
+<label>المؤهل العلمي</label>
+<input>
+
+<label>سنوات الخبرة</label>
+<input>
+
+<label>الدورات التدريبية</label>
+<input>
 
 </div>
 
-<!-- الحالات -->
+<!-- قاعدة بيانات المدرسة -->
+
+<div id="school" class="page">
+
+<h2>قاعدة بيانات المدرسة</h2>
+
+<label>اسم مديرة المدرسة</label>
+<input>
+
+<label>اسم المدير المساعد</label>
+<input>
+
+<label>الأخصائي الاجتماعي</label>
+<input>
+
+<label>عدد الطلبة الإجمالي</label>
+<input>
+
+<label>عدد الشعب</label>
+<input>
+
+<label>عدد الهيئة الإدارية</label>
+<input>
+
+<label>عدد الهيئة التدريسية</label>
+<input>
+
+<label>عدد الحراس</label>
+<input>
+
+<label>عدد سائقي الحافلات</label>
+<input>
+
+<label>عدد عمال التنظيف</label>
+<input>
+
+</div>
+
+<!-- الخطط -->
+
+<div id="plans" class="page">
+
+<h2>الخطة العامة للممرضة</h2>
+
+<table id="planTable">
+
+<tr>
+<th>الأسبوع</th>
+<th>النشاط</th>
+<th>ملاحظات</th>
+</tr>
+
+</table>
+
+<button class="add" onclick="addRow('planTable',3)">إضافة أسبوع</button>
+
+<h2>الخطة التثقيفية</h2>
+
+<table id="eduPlan">
+
+<tr>
+<th>الأسبوع</th>
+<th>النشاط</th>
+<th>ملاحظات</th>
+</tr>
+
+</table>
+
+<button class="add" onclick="addRow('eduPlan',3)">إضافة نشاط</button>
+
+</div>
+
+<!-- العهدة -->
+
+<div id="inventory" class="page">
+
+<h2>عهدة الأجهزة</h2>
+
+<table id="devices">
+
+<tr>
+<th>اسم الجهاز</th>
+<th>العدد</th>
+<th>رمز الجهاز</th>
+<th>بلد التصنيع</th>
+<th>مدى العمل</th>
+</tr>
+
+</table>
+
+<button class="add" onclick="addRow('devices',5)">إضافة جهاز</button>
+
+<h2>عهدة الأدوية</h2>
+
+<table id="med">
+
+<tr>
+<th>اسم الدواء</th>
+<th>العدد</th>
+<th>تاريخ الانتهاء</th>
+</tr>
+
+</table>
+
+<button class="add" onclick="addRow('med',3)">إضافة دواء</button>
+
+</div>
+
+<!-- متابعة المبنى -->
+
+<div id="building" class="page">
+
+<h2>متابعة المبنى المدرسي</h2>
+
+<table id="buildingTable">
+
+<tr>
+<th>البند</th>
+<th>الحالة</th>
+<th>ملاحظات</th>
+</tr>
+
+</table>
+
+<button class="add" onclick="addRow('buildingTable',3)">إضافة بند</button>
+
+</div>
+
+<!-- الحالات الخاصة -->
 
 <div id="cases" class="page">
 
@@ -169,17 +276,29 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 <tr>
 <th>اسم الطالب</th>
 <th>الصف</th>
-<th>الحالة</th>
+<th>الحالة المرضية</th>
 <th>خطة المتابعة</th>
 </tr>
 
 </table>
 
-<button class="add" onclick="addCase()">إضافة حالة</button>
+<button class="add" onclick="addRow('casesTable',4)">إضافة حالة</button>
 
 </div>
 
-<!-- التثقيف -->
+<!-- الفحص الشامل -->
+
+<div id="screening" class="page">
+
+<h2>الفحص الشامل</h2>
+
+<p>إضافة ملف Excel للفحص الشامل</p>
+
+<input type="file">
+
+</div>
+
+<!-- التثقيف الصحي -->
 
 <div id="education" class="page">
 
@@ -190,7 +309,7 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 <tr>
 <th>التاريخ</th>
 <th>اسم الفعالية</th>
-<th>الفئة</th>
+<th>الفئة المستهدفة</th>
 <th>العدد</th>
 <th>نوع الفعالية</th>
 <th>صورة</th>
@@ -198,7 +317,7 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 
 </table>
 
-<button class="add" onclick="addEdu()">إضافة فعالية</button>
+<button class="add" onclick="addRow('eduTable',6)">إضافة فعالية</button>
 
 </div>
 
@@ -218,7 +337,7 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 
 </table>
 
-<button class="add" onclick="addVisit()">إضافة سجل</button>
+<button class="add" onclick="addRow('visitTable',3)">إضافة سجل</button>
 
 </div>
 
@@ -226,13 +345,19 @@ box-shadow:0 2px 6px rgba(0,0,0,0.1);
 
 <div id="reports" class="page">
 
-<h2>رفع التقارير</h2>
+<h2>التقارير</h2>
 
 <input type="file" multiple>
 
 </div>
 
-</div>
+<!-- التعاميم -->
+
+<div id="circulars" class="page">
+
+<h2>التعاميم والنشرات</h2>
+
+<input type="file" multiple>
 
 </div>
 
@@ -248,30 +373,7 @@ document.getElementById(id).classList.add("active")
 
 }
 
-function saveData(){
-
-localStorage.setItem("cases",document.getElementById("casesTable").innerHTML)
-localStorage.setItem("edu",document.getElementById("eduTable").innerHTML)
-localStorage.setItem("visits",document.getElementById("visitTable").innerHTML)
-
-}
-
-function loadData(){
-
-if(localStorage.getItem("cases"))
-document.getElementById("casesTable").innerHTML=localStorage.getItem("cases")
-
-if(localStorage.getItem("edu"))
-document.getElementById("eduTable").innerHTML=localStorage.getItem("edu")
-
-if(localStorage.getItem("visits"))
-document.getElementById("visitTable").innerHTML=localStorage.getItem("visits")
-
-updateStats()
-
-}
-
-function addRow(tableId,cols,type){
+function addRow(tableId,cols){
 
 let table=document.getElementById(tableId)
 
@@ -280,74 +382,11 @@ let row=table.insertRow()
 for(let i=0;i<cols;i++){
 
 let cell=row.insertCell()
-
-if(type=="file" && i==5)
-cell.innerHTML="<input type='file'>"
-else
 cell.innerHTML="<input>"
 
 }
 
-saveData()
-
-updateStats()
-
 }
-
-function addCase(){
-
-addRow("casesTable",4)
-
-}
-
-function addEdu(){
-
-addRow("eduTable",6,"file")
-
-}
-
-function addVisit(){
-
-addRow("visitTable",3)
-
-}
-
-function updateStats(){
-
-let cases=document.getElementById("casesTable").rows.length-1
-let edu=document.getElementById("eduTable").rows.length-1
-let visits=document.getElementById("visitTable").rows.length-1
-
-document.getElementById("casesCount").innerText=cases
-document.getElementById("eduCount").innerText=edu
-document.getElementById("visitCount").innerText=visits
-
-updateChart(cases,edu,visits)
-
-}
-
-function updateChart(c,e,v){
-
-new Chart(document.getElementById("chart"),{
-
-type:"bar",
-
-data:{
-labels:["الحالات","الفعاليات","المترددين"],
-
-datasets:[{
-
-data:[c,e,v]
-
-}]
-
-}
-
-})
-
-}
-
-loadData()
 
 </script>
 
