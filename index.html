@@ -1,13 +1,420 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>الملف الشامل للصحة المدرسية</title>
 
+<style>
+
+body{
+margin:0;
+font-family:Tahoma;
+direction:rtl;
+background:#eef4f8;
+}
+
+header{
+background:#0a4fa3;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+display:flex;
+}
+
+.sidebar{
+width:250px;
+background:#0a4fa3;
+min-height:100vh;
+padding-top:20px;
+}
+
+.sidebar button{
+width:90%;
+margin:8px;
+padding:12px;
+border:none;
+background:white;
+color:#0a4fa3;
+cursor:pointer;
+border-radius:6px;
+font-weight:bold;
+}
+
+.content{
+flex:1;
+padding:30px;
+}
+
+.page{
+display:none;
+}
+
+.active{
+display:block;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+background:white;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px;
+text-align:center;
+}
+
+input,select{
+width:95%;
+padding:6px;
+}
+
+.addbtn{
+margin-top:10px;
+background:#198754;
+color:white;
+border:none;
+padding:10px 15px;
+cursor:pointer;
+border-radius:5px;
+}
+
+.stat{
+background:white;
+padding:20px;
+margin:10px;
+border-radius:8px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+display:inline-block;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>الملف الشامل للصحة المدرسية</h1>
+<h3>إعداد: ممرضة عام أولى سارة الرواحية</h3>
+<h4>مدرسة المواهب</h4>
+
+</header>
+
+<div class="container">
+
+<div class="sidebar">
+
+<button onclick="showPage('home')">الرئيسية</button>
+<button onclick="showPage('cv')">السيرة الذاتية</button>
+<button onclick="showPage('school')">قاعدة بيانات المدرسة</button>
+<button onclick="showPage('plans')">الخطط</button>
+<button onclick="showPage('inventory')">العهدة</button>
+<button onclick="showPage('building')">متابعة المبنى</button>
+<button onclick="showPage('cases')">الحالات الخاصة</button>
+<button onclick="showPage('education')">التثقيف الصحي</button>
+<button onclick="showPage('visits')">سجل المترددين</button>
+<button onclick="showPage('reports')">التقارير</button>
+
+</div>
+
+<div class="content">
+
+<!-- الرئيسية -->
+
+<div id="home" class="page active">
+
+<h2>لوحة التحكم</h2>
+
+<div class="stat">
+عدد الحالات المرضية
+<h3 id="casesCount">0</h3>
+</div>
+
+<div class="stat">
+عدد الفعاليات الصحية
+<h3 id="eduCount">0</h3>
+</div>
+
+<div class="stat">
+عدد المترددين
+<h3 id="visitCount">0</h3>
+</div>
+
+</div>
+
+<!-- السيرة الذاتية -->
+
+<div id="cv" class="page">
+
+<h2>السيرة الذاتية</h2>
+
+<label>الاسم</label>
+<input>
+
+<label>المؤهل العلمي</label>
+<input>
+
+<label>سنوات الخبرة</label>
+<input>
+
+<label>الدورات التدريبية</label>
+<input>
+
+</div>
+
+<!-- قاعدة بيانات المدرسة -->
+
+<div id="school" class="page">
+
+<h2>بيانات المدرسة</h2>
+
+<label>اسم مديرة المدرسة</label>
+<input>
+
+<label>اسم المدير المساعد</label>
+<input>
+
+<label>الأخصائي الاجتماعي</label>
+<input>
+
+<label>عدد الطلبة</label>
+<input>
+
+<label>عدد الشعب</label>
+<input>
+
+<label>عدد الهيئة الإدارية</label>
+<input>
+
+<label>عدد الهيئة التدريسية</label>
+<input>
+
+<label>عدد الحراس</label>
+<input>
+
+<label>عدد السائقين</label>
+<input>
+
+<label>عدد عمال النظافة</label>
+<input>
+
+</div>
+
+<!-- الخطط -->
+
+<div id="plans" class="page">
+
+<h2>الخطة العامة</h2>
+
+<table id="planTable">
+
+<tr>
+<th>الأسبوع</th>
+<th>النشاط</th>
+<th>ملاحظات</th>
+</tr>
+
+</table>
+
+<button class="addbtn" onclick="addRow('planTable',3)">
+إضافة أسبوع
+</button>
+
+</div>
+
+<!-- العهدة -->
+
+<div id="inventory" class="page">
+
+<h2>عهدة الأجهزة</h2>
+
+<table id="devices">
+
+<tr>
+<th>اسم الجهاز</th>
+<th>العدد</th>
+<th>رمز الجهاز</th>
+<th>بلد التصنيع</th>
+<th>الحالة</th>
+</tr>
+
+</table>
+
+<button class="addbtn" onclick="addRow('devices',5)">
+إضافة جهاز
+</button>
+
+</div>
+
+<!-- متابعة المبنى -->
+
+<div id="building" class="page">
+
+<h2>متابعة المبنى المدرسي</h2>
+
+<table id="buildingTable">
+
+<tr>
+<th>البند</th>
+<th>الحالة</th>
+<th>ملاحظات</th>
+</tr>
+
+</table>
+
+<button class="addbtn" onclick="addRow('buildingTable',3)">
+إضافة بند
+</button>
+
+</div>
+
+<!-- الحالات الخاصة -->
+
+<div id="cases" class="page">
+
+<h2>الحالات المرضية</h2>
+
+<table id="casesTable">
+
+<tr>
+<th>اسم الطالب</th>
+<th>الصف</th>
+<th>الحالة المرضية</th>
+<th>خطة المتابعة</th>
+</tr>
+
+</table>
+
+<button class="addbtn" onclick="addCase()">
+إضافة حالة
+</button>
+
+</div>
+
+<!-- التثقيف الصحي -->
+
+<div id="education" class="page">
+
+<h2>التثقيف الصحي</h2>
+
+<table id="eduTable">
+
+<tr>
+<th>التاريخ</th>
+<th>اسم الفعالية</th>
+<th>الفئة</th>
+<th>العدد</th>
+<th>نوع الفعالية</th>
+</tr>
+
+</table>
+
+<button class="addbtn" onclick="addEducation()">
+إضافة فعالية
+</button>
+
+</div>
+
+<!-- المترددين -->
+
+<div id="visits" class="page">
+
+<h2>سجل المترددين</h2>
+
+<table id="visitTable">
+
+<tr>
+<th>التاريخ</th>
+<th>اسم الطالب</th>
+<th>السبب</th>
+</tr>
+
+</table>
+
+<button class="addbtn" onclick="addVisit()">
+إضافة سجل
+</button>
+
+</div>
+
+<!-- التقارير -->
+
+<div id="reports" class="page">
+
+<h2>رفع التقارير</h2>
+
+<input type="file" multiple>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function showPage(id){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active")
+})
+
+document.getElementById(id).classList.add("active")
+
+}
+
+function addRow(tableId,cols){
+
+let table=document.getElementById(tableId)
+
+let row=table.insertRow()
+
+for(let i=0;i<cols;i++){
+
+let cell=row.insertCell()
+cell.innerHTML="<input>"
+
+}
+
+}
+
+function addCase(){
+
+addRow("casesTable",4)
+
+let count=document.getElementById("casesTable").rows.length-1
+
+document.getElementById("casesCount").innerText=count
+
+}
+
+function addEducation(){
+
+addRow("eduTable",5)
+
+let count=document.getElementById("eduTable").rows.length-1
+
+document.getElementById("eduCount").innerText=count
+
+}
+
+function addVisit(){
+
+addRow("visitTable",3)
+
+let count=document.getElementById("visitTable").rows.length-1
+
+document.getElementById("visitCount").innerText=count
+
+}
+
+</script>
+
+</body>
+</html>
